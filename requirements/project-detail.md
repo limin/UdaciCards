@@ -24,12 +24,14 @@ Your application should have, at a minimum, five views.
 * Deck List View (Default View)
   - [ ] displays the title of each Deck
   - [ ] displays the number of cards in each deck
+![Deck List](deck-list-view.png)
 
 * Individual Deck View
   - [ ] displays the title of the Deck
   - [ ] displays the number of cards in the deck
   - [ ] displays an option to start a quiz on this specific deck
   - [ ] An option to add a new question to the deck
+![Deck](deck-view.png)
 
 * Quiz View
   - [ ] diplays a card question
@@ -38,16 +40,19 @@ Your application should have, at a minimum, five views.
   - [ ] an "Incorrect" button
   - [ ] the number of cards left in the quiz
   - [ ] Displays the percentage correct once the quiz is complete
-
+![Quiz](quiz-view.png)
+![Quiz](quiz-view-2.png)
 
 * New Deck View
   - [ ] An option to enter in the title for the new deck
   - [ ] An option to submit the new deck title
+![New Deck](new-deck-view.png)
 
 * New Question View
   - [ ] An option to enter in the question
   - [ ] An option to enter in the answer
   - [ ] An option to submit the new question
+![New Question](new-question-view.png)
 
 ### Data
 We'll use AsyncStorage to store our decks and flashcards. Redux is optional for this project.
