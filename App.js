@@ -1,14 +1,16 @@
 import React from 'react';
 import { StyleSheet, Text, View, FlatList, Button,TouchableOpacity } from 'react-native';
 import { StackNavigator } from 'react-navigation'
+import AddDeck from './components/AddDeck'
+import { uid } from './utils'
 
 
 const Decks= ({navigation})=>{
   //key is required to solve warning: "VirtualizedList: missing keys for items"
   const data=[
-    {key:"1",title:"java",cardCount:3},
-    {key:"2",title:"javascript",cardCount:0},
-    {key:"3",title:"python",cardCount:6},
+    {key:uid(),title:"java",cardCount:3},
+    {key:uid(),title:"javascript",cardCount:0},
+    {key:uid(),title:"python",cardCount:6},
   ]
 
   const Deck=({title,cardCount})=>{
@@ -30,7 +32,16 @@ const Decks= ({navigation})=>{
   return (
     <View style={styles.container}>
       <FlatList data={data} renderItem={renderItem}/>
+      <TouchableOpacity onPress={()=>navigation.navigate("NewDeck")}>
+        <Text>Add Deck</Text>
+      </TouchableOpacity>
     </View>
+  )
+}
+
+const NewDeck=({navigation})=>{
+  return (
+    <AddDeck navigation={navigation}/>
   )
 }
 
@@ -50,6 +61,12 @@ const Stack = StackNavigator({
     screen:Decks,
     navigationOptions:({navigation})=>({
         title:"DECKS"
+    })
+  },
+  NewDeck:{
+    screen:NewDeck,
+    navigationOptions:({navigation})=>({
+        title:"NEW DECK"
     })
   },
   Deck:{
