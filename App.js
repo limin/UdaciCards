@@ -1,22 +1,27 @@
-import React from 'react';
-import { StyleSheet, Text, View, FlatList, Button,TouchableOpacity } from 'react-native';
+import React from 'react'
+import { StyleSheet, Text, View, FlatList, Button,TouchableOpacity } from 'react-native'
 import { StackNavigator } from 'react-navigation'
 import AddDeck from './components/AddDeck'
+import AddQuestion from './components/AddQuestion'
 import { uid } from './utils'
+
 
 
 const Decks= ({navigation})=>{
   //key is required to solve warning: "VirtualizedList: missing keys for items"
+  const deck1={id:uid(),title:"java",cardCount:3}
+  const deck2={id:uid(),title:"javascript",cardCount:0}
+  const deck3={id:uid(),title:"python",cardCount:6}
   const data=[
-    {key:uid(),title:"java",cardCount:3},
-    {key:uid(),title:"javascript",cardCount:0},
-    {key:uid(),title:"python",cardCount:6},
+    {key:deck1.id,deck:deck1},
+    {key:deck2.id,deck:deck2},
+    {key:deck3.id,deck:deck3},
   ]
 
-  const Deck=({title,cardCount})=>{
+  const Deck=({id, title,cardCount})=>{
     return (
       <View>
-        <TouchableOpacity onPress={()=>navigation.navigate('Deck',{title,cardCount})}>
+        <TouchableOpacity onPress={()=>navigation.navigate('Deck',{id, title,cardCount})}>
           <Text>{title}</Text>
         </TouchableOpacity>
         <Text>{cardCount}</Text>
@@ -25,7 +30,7 @@ const Decks= ({navigation})=>{
   }
 
   const renderItem=({item})=>{
-    return <Deck {...item}/>
+    return <Deck {...item.deck}/>
   }
 
 
@@ -45,12 +50,19 @@ const NewDeck=({navigation})=>{
   )
 }
 
+const NewQuestion=({navigation})=>{
+  return (
+    <AddQuestion navigation={navigation}/>
+  )
+}
+
 const Deck=({navigation})=>{
+  const {id, title,cardCount}=navigation.state.params
   return (
     <View>
-      <Text>{navigation.state.params.title}</Text>
-      <Text>{navigation.state.params.cardCount}</Text>
-      <Button title="Add Card" onPress={()=>alert('Add Card')}/>
+      <Text>{title}</Text>
+      <Text>{cardCount}</Text>
+      <Button title="Add Card" onPress={()=>navigation.navigate("NewQuestion",{id, title,cardCount})}/>
       <Button title="Start Quiz" onPress={()=>alert('Start Quiz')}/>
     </View>
   )
@@ -73,6 +85,12 @@ const Stack = StackNavigator({
     screen:Deck,
     navigationOptions:({navigation})=>({
       title:navigation.state.params.title
+    })
+  },
+  NewQuestion:{
+    screen: NewQuestion,
+    navigationOptions:({navigation})=>({
+      title: "NEW QUESTION"
     })
   }
 })

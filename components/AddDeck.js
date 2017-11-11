@@ -1,16 +1,18 @@
 import React from 'react'
-import {View, TouchableOpacity, Text, TextInput } from 'react-native'
-import {uid} from '../utils'
+import { View, TouchableOpacity, Text, TextInput } from 'react-native'
+import { uid } from '../utils'
 
 export default class AddDeck extends React.Component{
   state={
     text:""
   }
   submit=()=>{
-    key=uid()
-    title=this.state.text
-    cardCount=0
-    this.props.navigation.navigate('Deck',{title,cardCount})
+    const deck={
+      id: uid(),
+      title:this.state.text,
+      cardCount:0
+    }
+    this.props.navigation.navigate('Deck',deck)
   }
   render(){
     return (
