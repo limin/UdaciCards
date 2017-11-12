@@ -1,18 +1,16 @@
 import React from 'react'
+import { connect } from 'react-redux'
 import { View, TouchableOpacity, Text, TextInput } from 'react-native'
-import { uid } from '../utils'
+import { addDeck } from '../actions'
 
-export default class AddDeck extends React.Component{
+class AddDeck extends React.Component{
   state={
     text:""
   }
   submit=()=>{
-    const deck={
-      id: uid(),
-      title:this.state.text,
-      cardCount:0
-    }
-    this.props.navigation.navigate('Deck',deck)
+    const {addDeck, gotoDecks}=this.props
+    addDeck(this.state.text)
+    gotoDecks()
   }
   render(){
     return (
@@ -26,3 +24,12 @@ export default class AddDeck extends React.Component{
     )
   }
 }
+
+function mapDispatchToProps(dispatch,{navigation}){
+  return {
+    addDeck: (title)=>dispatch(addDeck(title)),
+    gotoDecks:()=>navigation.navigate("Decks")
+  }
+}
+
+export default connect(null,mapDispatchToProps)(AddDeck)
