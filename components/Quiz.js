@@ -18,18 +18,26 @@ import { View, Text, TouchableOpacity } from 'react-native'
 * }
 */
 class Quiz extends React.Component{
-  state={
-    index:0,
-    flipped:false,
-    quiz:{
-    }
+  reset=()=>{
+    this.setState({
+      index:0,
+      flipped:false,
+      quiz:{
+      }
+    })
   }
   getScore=()=>{
-    const answers=Object.values(quiz)
+    const answers=Object.values(this.state.quiz)
     if(answers.length==0){
       return 0
     }else{
-      
+      let correctAnswerCount= answers.reduce((count,answer)=>{
+        if(answer.correct){
+          count++
+        }
+        return count
+      },0)
+      return Math.round(correctAnswerCount*100/answers.length)
     }
   }
   answer=(correct)=>{
@@ -52,14 +60,18 @@ class Quiz extends React.Component{
   correct=()=>this.answer(true)
   incorrect=()=>this.answer(false)
   flip=()=>this.setState({flipped:!this.state.flipped})
+  componentWillMount(){
+    this.reset()
+  }
+  //reset()
   render(){
     const {deck}=this.props
     const {index,quiz}=this.state
     if(index===deck.cards.length){
       return (
         <View>
-          <Text>Score:</Text>
-          <TouchableOpacity>
+          <Text>Score: {this.getScore()}</Text>
+          <TouchableOpacity onPress={()=>this.reset()}>
             <Text>Restart Quiz</Text>
           </TouchableOpacity>
           <TouchableOpacity onPress={this.props.gotoDeck}>
