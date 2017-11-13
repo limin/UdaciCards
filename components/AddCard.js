@@ -14,7 +14,7 @@ class AddCard extends React.Component{
     const {deck,navigate,addCard}=this.props
     const card={
       ...this.state,
-      parentId:deck.id
+      deckId:deck.id
     }
     addCard(card)
     navigate("Deck",deck)

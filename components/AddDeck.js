@@ -15,7 +15,7 @@ class AddDeck extends React.Component{
   render(){
     return (
       <View>
-        <TextInput placeholder="title" style={{height:40}} value={this.state.text}
+        <TextInput placeholder="Deck Title" style={{height:40}} value={this.state.text}
           onChangeText={(text)=>this.setState({text})}/>
         <TouchableOpacity onPress={this.submit}>
           <Text>Create Deck</Text>

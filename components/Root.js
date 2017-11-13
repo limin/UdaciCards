@@ -8,31 +8,8 @@ import { StackNavigator } from 'react-navigation'
 import reducer from '../reducers'
 import AddDeck from '../components/AddDeck'
 import AddCard from '../components/AddCard'
+import Quiz from '../components/Quiz'
 import { uid } from '../utils'
-
-const NewDeck=({navigation})=>{
-  return (
-    <AddDeck navigation={navigation}/>
-  )
-}
-
-const NewCard=({navigation})=>{
-  return (
-    <AddCard navigation={navigation}/>
-  )
-}
-
-const Deck=({navigation})=>{
-  const {id, title,cards}=navigation.state.params
-  return (
-    <View>
-      <Text>{title}</Text>
-      <Text>{cards.length}</Text>
-      <Button title="Add Card" onPress={()=>navigation.navigate("NewCard",{id, title,cards})}/>
-      <Button title="Start Quiz" onPress={()=>alert('Start Quiz')}/>
-    </View>
-  )
-}
 
 const styles = StyleSheet.create({
   container: {
@@ -46,11 +23,54 @@ const styles = StyleSheet.create({
 class Root extends React.Component{
   render(){
     const data=this.props.decks
+    const gotoNewCard=(navigation,{id, title,cards})=>{
+      navigation.navigate("NewCard",{id, title,cards})
+    }
+    const gotoQuiz=(navigation,{id, title,cards})=>{
+      navigation.navigate("StartQuiz",{id, title,cards})
+    }
+    const gotoDeck=(navigation,{id, title,cards})=>{
+      navigation.navigate("Deck",{id, title,cards})
+    }
+    const gotoNewDeck=(navigation)=>{
+      navigation.navigate("NewDeck")
+    }
+
+    const NewDeck=({navigation})=>{
+      return (
+        <AddDeck navigation={navigation}/>
+      )
+    }
+
+    const NewCard=({navigation})=>{
+      return (
+        <AddCard navigation={navigation}/>
+      )
+    }
+
+    const StartQuiz=({navigation})=>{
+      return (
+        <Quiz navigation={navigation}/>
+      )
+    }
+
+    const Deck=({navigation})=>{
+      const {id, title,cards}=navigation.state.params
+      return (
+        <View>
+          <Text>{title}</Text>
+          <Text>{cards.length}</Text>
+          <Button title="Add Card" onPress={()=>gotoNewCard(navigation,{id, title, cards})}/>
+          <Button title="Start Quiz" onPress={()=>gotoQuiz(navigation,{id, title, cards})}/>
+        </View>
+      )
+    }
+
     const Decks= ({navigation})=>{
       const Deck=({id, title,cards})=>{
         return (
           <View>
-            <TouchableOpacity onPress={()=>navigation.navigate('Deck',{id, title,cards})}>
+            <TouchableOpacity onPress={()=>gotoDeck(navigation,{id, title, cards})}>
               <Text>{title}</Text>
             </TouchableOpacity>
             <Text>{cards.length}</Text>
@@ -65,7 +85,7 @@ class Root extends React.Component{
       return (
         <View style={styles.container}>
           <FlatList data={data} renderItem={renderItem}/>
-          <TouchableOpacity onPress={()=>navigation.navigate("NewDeck")}>
+          <TouchableOpacity onPress={()=>gotoNewDeck(navigation)}>
             <Text>Add Deck</Text>
           </TouchableOpacity>
         </View>
@@ -77,6 +97,12 @@ class Root extends React.Component{
         screen:Decks,
         navigationOptions:({navigation})=>({
             title:"DECKS"
+        })
+      },
+      StartQuiz:{
+        screen:StartQuiz,
+        navigationOptions:({navigation})=>({
+            title:"Quiz"
         })
       },
       NewDeck:{
@@ -109,7 +135,7 @@ function mapStateToProps({decks,cards}){
   return {
     decks:Object.values(decks).map((deck)=>{
       deck.key=deck.id
-      deck.cards=Object.values(cards).filter((card)=>card.parentId===deck.id)
+      deck.cards=Object.values(cards).filter((card)=>card.deckId===deck.id)
       return deck
     })
   }

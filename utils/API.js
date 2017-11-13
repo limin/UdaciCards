@@ -1,11 +1,14 @@
 import { AsyncStorage } from 'react-native'
 import { uid } from '../utils'
 
-const STORE_KEY="UdaciCards"
+const STORE_KEY="com.udacity.UdaciCards"
 const getData=()=>{
-  return AsyncStorage.getItem(STORE_KEY).then((data)=>{
-    if(data==null){
+  return AsyncStorage.getItem(STORE_KEY).then((value)=>{
+    let data={}
+    if(value==null){
       data={decks:{},cards:{}}
+    }else{
+      data=JSON.parse(value)
     }
     if(!data.hasOwnProperty("decks")){
       data.decks={}
@@ -14,10 +17,10 @@ const getData=()=>{
       data.cards={}
     }
     return new Promise((resolve,reject)=>resolve(data))
-  });
+  },(error)=>console.log(error)).catch((error)=>console.log(error))
 }
 const setData=(data)=>{
-  return AsyncStorage.setItem(STORE_KEY, JSON.stringify(data))
+  return AsyncStorage.setItem(STORE_KEY, JSON.stringify(data)).catch((error)=>console.log(error))
 }
 const saveDeck=(deck)=>{
   return getData().then((data)=>{
