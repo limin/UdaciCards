@@ -16,6 +16,9 @@ const getData=()=>{
     if(!data.hasOwnProperty("cards")){
       data.cards={}
     }
+    if(!data.hasOwnProperty("quizzes")){
+      data.quizzes={}
+    }
     return new Promise((resolve,reject)=>resolve(data))
   },(error)=>console.log(error)).catch((error)=>console.log(error))
 }
@@ -49,6 +52,21 @@ const saveCard=(card)=>{
     }
     setData(data)
     return new Promise((resolve,reject)=>resolve(card))
+  })
+}
+
+export const saveQuiz=(quiz)=>{
+  return getData().then((data)=>{
+    if(!quiz.hasOwnProperty("id")){
+      quiz.id=uid()
+    }
+    if(data.quizzes){
+      data.quizzes[quiz.id]=quiz
+    }else{
+      data.quizzes={[quiz.id]:quiz}
+    }
+    setData(data)
+    return new Promise((resolve,reject)=>resolve(quiz))
   })
 }
 
