@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { View, Text, TouchableOpacity } from 'react-native'
 import update from 'immutability-helper'
-import { uid } from '../utils'
+import { uid, clearLocalNotification, setLocalNotification } from '../utils'
 import { saveQuiz } from '../actions'
 
 /**
@@ -58,6 +58,8 @@ class Quiz extends React.Component{
         }
     }})
     this.setState(newState)
+    this.props.saveQuiz(newState.quiz)
+    clearLocalNotification().then(setLocalNotification())
   }
 
   correct=()=>this.answer(true)

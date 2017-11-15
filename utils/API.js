@@ -1,7 +1,7 @@
 import { AsyncStorage } from 'react-native'
 import { uid } from '../utils'
 
-const STORE_KEY="com.udacity.UdaciCards"
+const STORE_KEY="org.udacicards.data"
 const getData=()=>{
   return AsyncStorage.getItem(STORE_KEY).then((value)=>{
     let data={}

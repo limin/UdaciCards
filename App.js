@@ -5,8 +5,12 @@ import { createStore,applyMiddleware } from 'redux'
 import { Provider } from 'react-redux'
 import reducer from './reducers'
 import Root from './components/Root'
+import { setLocalNotification } from './utils'
 
 export default class App extends React.Component {
+  componentDidMount(){
+    setLocalNotification()
+  }
   loggerMiddleware = createLogger()
   store=createStore(reducer,{decks:{},cards:{}},applyMiddleware(thunkMiddleware,this.loggerMiddleware ))
   render() {
