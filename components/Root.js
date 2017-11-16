@@ -3,7 +3,7 @@ import thunkMiddleware from 'redux-thunk'
 import { createLogger } from 'redux-logger'
 import { createStore,applyMiddleware } from 'redux'
 import { connect } from 'react-redux'
-import { StyleSheet, Text, View, FlatList, Button,TouchableOpacity } from 'react-native'
+import { StyleSheet, Text, View, FlatList, Button,TouchableOpacity, UIManager, Platform, LayoutAnimation } from 'react-native'
 import { StackNavigator } from 'react-navigation'
 import reducer from '../reducers'
 import AddDeck from '../components/AddDeck'
@@ -21,12 +21,28 @@ const styles = StyleSheet.create({
 });
 
 class Root extends React.Component{
+  constructor(props){
+    super(props)
+    if(Platform.OS==='android'){
+      UIManager.setLayoutAnimationEnabledExperimental && UIManager.setLayoutAnimationEnabledExperimental(true)
+    }
+  }
+  startAnimation() {
+    /**
+ presets
+ easeInEaseOut: LayoutAnimationConfig
+ linear:LayoutAnimationConfig
+ spring: LayoutAnimationConfig
+ */
+    LayoutAnimation.configureNext(LayoutAnimation.Presets.linear)
+  }
   render(){
     const data=this.props.decks
     const gotoNewCard=(navigation,{id, title,cards})=>{
       navigation.navigate("NewCard",{id, title,cards})
     }
     const gotoQuiz=(navigation,{id, title,cards})=>{
+      this.startAnimation()
       navigation.navigate("StartQuiz",{id, title,cards})
     }
     const gotoDeck=(navigation,{id, title,cards})=>{
