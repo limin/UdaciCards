@@ -4,6 +4,7 @@ import { View, Text, TouchableOpacity } from 'react-native'
 import update from 'immutability-helper'
 import { uid, clearLocalNotification, setLocalNotification } from '../utils'
 import { saveQuiz } from '../actions'
+import theme from '../theme'
 
 /**
 * sample quiz {
@@ -37,13 +38,13 @@ class Quiz extends React.Component{
   }
 
   answer=(correct)=>{
-    const { cards }=this.props.deck
+    const { saveQuiz, deck }=this.props
     let { index }=this.state
-    const card=cards[index++]
+    const card=deck.cards[index++]
     const correctAnswerCount=Object.values(this.state.quiz.cards).reduce(
       (count,answer)=>answer.correct?++count:count,
       correct?1:0)
-    const score=Math.round(correctAnswerCount*100/cards.length)
+    const score=Math.round(correctAnswerCount*100/deck.cards.length)
     //setState is shllow merge, use immutability-helper to deep merge state
     const newState=update(this.state,{
       index:{$set: index},
@@ -58,8 +59,8 @@ class Quiz extends React.Component{
         }
     }})
     this.setState(newState)
-    this.props.saveQuiz(newState.quiz)
-    clearLocalNotification().then(setLocalNotification())
+    saveQuiz(newState.quiz)
+    clearLocalNotification().then(setLocalNotification)
   }
 
   correct=()=>this.answer(true)
@@ -73,19 +74,21 @@ class Quiz extends React.Component{
     const {index,quiz}=this.state
     if(index===cards.length){
       return (
-        <View>
+        <View style={theme.container}>
           <Text>Score: {quiz.score}</Text>
-          <TouchableOpacity onPress={()=>this.reset()}>
-            <Text>Restart Quiz</Text>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={this.props.gotoDeck}>
-            <Text>Back to Deck</Text>
-          </TouchableOpacity>
+          <View style={theme.buttonBar}>
+            <TouchableOpacity onPress={this.reset}>
+              <Text style={theme.button}>Restart Quiz</Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={this.props.gotoDeck}>
+              <Text style={theme.button}>Back to Deck</Text>
+            </TouchableOpacity>
+          </View>
         </View>
       )
     }
     return (
-      <View>
+      <View style={theme.container}>
         <Text>{index+1}/{cards.length}</Text>
         {
           this.state.flipped?<Text>{cards[index].answer}</Text>:<Text>{cards[index].question}</Text>
@@ -93,14 +96,16 @@ class Quiz extends React.Component{
         {
           this.state.flipped?<TouchableOpacity onPress={this.flip}><Text>Question</Text></TouchableOpacity>:<TouchableOpacity onPress={this.flip}><Text>Answer</Text></TouchableOpacity>
         }
-        <TouchableOpacity onPress={this.correct}><Text>Correct</Text></TouchableOpacity>
-        <TouchableOpacity onPress={this.incorrect}><Text>Incorrect</Text></TouchableOpacity>
+        <View style={theme.buttonBar}>
+          <TouchableOpacity onPress={this.correct}><Text style={theme.button}>Correct</Text></TouchableOpacity>
+          <TouchableOpacity onPress={this.incorrect}><Text style={theme.button}>Incorrect</Text></TouchableOpacity>
+        </View>
       </View>
     )
   }
 }
 
-function mapStateToProps({},{navigation}){
+function mapStateToProps({decks,cards,quizzes},{navigation}){
   const deck=navigation.state.params
   return {
     deck,

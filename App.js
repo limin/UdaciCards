@@ -12,7 +12,7 @@ export default class App extends React.Component {
     setLocalNotification()
   }
   loggerMiddleware = createLogger()
-  store=createStore(reducer,{decks:{},cards:{}},applyMiddleware(thunkMiddleware,this.loggerMiddleware ))
+  store=createStore(reducer,{decks:{},cards:{},quizzes:{}},applyMiddleware(thunkMiddleware,this.loggerMiddleware ))
   render() {
     return (
       <Provider store={this.store}>

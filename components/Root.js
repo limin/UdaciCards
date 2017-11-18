@@ -3,22 +3,17 @@ import thunkMiddleware from 'redux-thunk'
 import { createLogger } from 'redux-logger'
 import { createStore,applyMiddleware } from 'redux'
 import { connect } from 'react-redux'
-import { StyleSheet, Text, View, FlatList, Button,TouchableOpacity, UIManager, Platform, LayoutAnimation } from 'react-native'
+import { Text, View, FlatList,TouchableOpacity, UIManager, Platform, LayoutAnimation } from 'react-native'
 import { StackNavigator } from 'react-navigation'
 import reducer from '../reducers'
 import AddDeck from '../components/AddDeck'
 import AddCard from '../components/AddCard'
 import Quiz from '../components/Quiz'
+import DeckList from '../components/DeckList'
+import DeckDetail from '../components/DeckDetail'
+import {loadData} from '../actions'
 import { uid } from '../utils'
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+import theme from '../theme'
 
 class Root extends React.Component{
   constructor(props){
@@ -26,6 +21,9 @@ class Root extends React.Component{
     if(Platform.OS==='android'){
       UIManager.setLayoutAnimationEnabledExperimental && UIManager.setLayoutAnimationEnabledExperimental(true)
     }
+  }
+  componentWillMount(){
+    this.props.loadData()
   }
   startAnimation() {
     /**
@@ -37,21 +35,6 @@ class Root extends React.Component{
     LayoutAnimation.configureNext(LayoutAnimation.Presets.linear)
   }
   render(){
-    const data=this.props.decks
-    const gotoNewCard=(navigation,{id, title,cards})=>{
-      navigation.navigate("NewCard",{id, title,cards})
-    }
-    const gotoQuiz=(navigation,{id, title,cards})=>{
-      this.startAnimation()
-      navigation.navigate("StartQuiz",{id, title,cards})
-    }
-    const gotoDeck=(navigation,{id, title,cards})=>{
-      navigation.navigate("Deck",{id, title,cards})
-    }
-    const gotoNewDeck=(navigation)=>{
-      navigation.navigate("NewDeck")
-    }
-
     const NewDeck=({navigation})=>{
       return (
         <AddDeck navigation={navigation}/>
@@ -71,40 +54,14 @@ class Root extends React.Component{
     }
 
     const Deck=({navigation})=>{
-      const {id, title,cards}=navigation.state.params
       return (
-        <View>
-          <Text>{title}</Text>
-          <Text>{cards.length}</Text>
-          <Button title="Add Card" onPress={()=>gotoNewCard(navigation,{id, title, cards})}/>
-          <Button title="Start Quiz" onPress={()=>gotoQuiz(navigation,{id, title, cards})}/>
-        </View>
+        <DeckDetail navigation={navigation}/>
       )
     }
 
     const Decks= ({navigation})=>{
-      const Deck=({id, title,cards})=>{
-        return (
-          <View>
-            <TouchableOpacity onPress={()=>gotoDeck(navigation,{id, title, cards})}>
-              <Text>{title}</Text>
-            </TouchableOpacity>
-            <Text>{cards.length}</Text>
-          </View>
-        )
-      }
-
-      const renderItem=({item})=>{
-        return <Deck {...item}/>
-      }
-
       return (
-        <View style={styles.container}>
-          <FlatList data={data} renderItem={renderItem}/>
-          <TouchableOpacity onPress={()=>gotoNewDeck(navigation)}>
-            <Text>Add Deck</Text>
-          </TouchableOpacity>
-        </View>
+        <DeckList navigation={navigation}/>
       )
     }
 
@@ -147,14 +104,10 @@ class Root extends React.Component{
   }
 }
 
-function mapStateToProps({decks,cards}){
+function mapDispatchToProps(dispatch){
   return {
-    decks:Object.values(decks).map((deck)=>{
-      deck.key=deck.id
-      deck.cards=Object.values(cards).filter((card)=>card.deckId===deck.id)
-      return deck
-    })
+    loadData:()=>dispatch(loadData())
   }
 }
 
-export default connect(mapStateToProps)(Root)
+export default connect(null,mapDispatchToProps)(Root)

@@ -2,11 +2,11 @@ import { AsyncStorage } from 'react-native'
 import { uid } from '../utils'
 
 const STORE_KEY="org.udacicards.data"
-const getData=()=>{
+export const getData=()=>{
   return AsyncStorage.getItem(STORE_KEY).then((value)=>{
     let data={}
     if(value==null){
-      data={decks:{},cards:{}}
+      data={decks:{},cards:{},quizzes:{}}
     }else{
       data=JSON.parse(value)
     }

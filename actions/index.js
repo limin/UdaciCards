@@ -25,6 +25,16 @@ export function receiveQuizzes(quizzes){
   }
 }
 
+export function loadData(){
+  return function(dispatch){
+    API.getData().then((data)=>{
+      dispatch(receiveDecks(Object.values(data.decks)))
+      dispatch(receiveCards(Object.values(data.cards)))
+      dispatch(receiveQuizzes(Object.values(data.quizzes)))
+    })
+  }
+}
+
 export function addDeck(title){
   return function(dispatch){
     API.addDeck(title).then((deck)=>dispatch(receiveDecks([deck])))
