@@ -12,20 +12,20 @@ class AddCard extends React.Component{
   }
 
   submit=()=>{
-    const {deck,navigate,addCard}=this.props
+    const {deck,goBack,addCard}=this.props
     const card={
       ...this.state,
-      deckId:deck.id
+      deckId:deck.id,
     }
     addCard(card)
-    navigate("Deck",deck)
+    goBack()
   }
   render(){
     return (
       <View style={theme.container}>
-        <TextInput placeholder="question" style={{height:40}} value={this.state.question}
+        <TextInput placeholder="question" style={theme.textInput} value={this.state.question}
           onChangeText={(text)=>this.setState({question:text})}/>
-        <TextInput placeholder="answer" style={{height:40}} value={this.state.answer}
+        <TextInput placeholder="answer" style={theme.textInput} value={this.state.answer}
           onChangeText={(text)=>this.setState({answer:text})}/>
         <View style={theme.buttonBar}>
           <TouchableOpacity onPress={this.submit}>
@@ -40,7 +40,7 @@ class AddCard extends React.Component{
 function mapStateToProps({decks},{navigation}){
   return {
     deck: navigation.state.params,
-    navigate:navigation.navigate
+    goBack:navigation.goBack
   }
 }
 

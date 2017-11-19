@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { View, Text, TouchableOpacity } from 'react-native'
+import { View, ScrollView, Text, TouchableOpacity } from 'react-native'
 import update from 'immutability-helper'
 import { uid, clearLocalNotification, setLocalNotification } from '../utils'
 import { saveQuiz } from '../actions'
@@ -48,6 +48,7 @@ class Quiz extends React.Component{
     //setState is shllow merge, use immutability-helper to deep merge state
     const newState=update(this.state,{
       index:{$set: index},
+      flipped:{$set: false},
       quiz:{
         score:{$set:score},
         end:{$set: Date.now()},
@@ -75,12 +76,14 @@ class Quiz extends React.Component{
     if(index===cards.length){
       return (
         <View style={theme.container}>
-          <Text>Score: {quiz.score}</Text>
+          <View style={[theme.container,theme.centerContent]}>
+            <Text style={theme.quizScore}>Score: {quiz.score}</Text>
+          </View>
           <View style={theme.buttonBar}>
             <TouchableOpacity onPress={this.reset}>
               <Text style={theme.button}>Restart Quiz</Text>
             </TouchableOpacity>
-            <TouchableOpacity onPress={this.props.gotoDeck}>
+            <TouchableOpacity onPress={()=>this.props.backToDeck()}>
               <Text style={theme.button}>Back to Deck</Text>
             </TouchableOpacity>
           </View>
@@ -89,12 +92,14 @@ class Quiz extends React.Component{
     }
     return (
       <View style={theme.container}>
-        <Text>{index+1}/{cards.length}</Text>
+        <Text style={theme.quizIndex}>{index+1}/{cards.length}</Text>
+        <ScrollView contentContainerStyle={theme.contentContainer}>
+          {
+            this.state.flipped?<Text style={theme.quizContent}>{cards[index].answer}</Text>:<Text style={theme.quizContent}>{cards[index].question}</Text>
+          }
+        </ScrollView>
         {
-          this.state.flipped?<Text>{cards[index].answer}</Text>:<Text>{cards[index].question}</Text>
-        }
-        {
-          this.state.flipped?<TouchableOpacity onPress={this.flip}><Text>Question</Text></TouchableOpacity>:<TouchableOpacity onPress={this.flip}><Text>Answer</Text></TouchableOpacity>
+          this.state.flipped?<TouchableOpacity onPress={this.flip}><Text style={theme.quizToggleButton}>Question</Text></TouchableOpacity>:<TouchableOpacity onPress={this.flip}><Text style={theme.quizToggleButton}>Answer</Text></TouchableOpacity>
         }
         <View style={theme.buttonBar}>
           <TouchableOpacity onPress={this.correct}><Text style={theme.button}>Correct</Text></TouchableOpacity>
@@ -109,7 +114,7 @@ function mapStateToProps({decks,cards,quizzes},{navigation}){
   const deck=navigation.state.params
   return {
     deck,
-    gotoDeck:()=>navigation.navigate("Deck",deck)
+    backToDeck:()=>navigation.goBack()
   }
 }
 

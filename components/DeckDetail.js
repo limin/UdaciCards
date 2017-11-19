@@ -1,5 +1,5 @@
 import React from 'react'
-import {View, Text, TouchableOpacity} from 'react-native'
+import {View, ScrollView, Text, TouchableOpacity} from 'react-native'
 import {connect} from 'react-redux'
 import theme from '../theme'
 import { getDerivedDecks } from '../selectors'
@@ -16,8 +16,10 @@ class DeckDetail extends React.Component{
     const {deck,navigation}=this.props
     return (
       <View style={theme.container}>
-        <Text>{deck.title}</Text>
-        <Text>{deck.cards.length}</Text>
+        <View style={[theme.container, theme.centerContent]}>
+          <Text style={theme.deckTitle}>{deck.title}</Text>
+          <Text style={theme.deckCardCount}>{deck.cards.length}</Text>
+        </View>
         <View style={theme.buttonBar}>
           <TouchableOpacity onPress={()=>this.gotoNewCard(navigation,deck)}><Text style={theme.button}>Add Card</Text></TouchableOpacity>
           <TouchableOpacity onPress={()=>this.gotoQuiz(navigation,deck)}><Text style={theme.button}>Start Quiz</Text></TouchableOpacity>

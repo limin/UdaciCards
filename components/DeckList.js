@@ -14,11 +14,11 @@ class DeckList extends React.Component{
 
   renderItem=({index,item})=>{
     return (
-      <View>
+      <View style={theme.listItem}>
         <TouchableOpacity onPress={()=>this.gotoDeck({...item})}>
-          <Text>{item.title}</Text>
+          <Text style={theme.listItemTitle}>{item.title}</Text>
         </TouchableOpacity>
-        <Text>{item.cards.length}</Text>
+        <Text style={theme.listItemSubtitle}>{item.cards.length} cards</Text>
       </View>
     )
   }

@@ -16,7 +16,7 @@ class AddDeck extends React.Component{
   render(){
     return (
       <View style={theme.container}>
-        <TextInput placeholder="Deck Title" style={{height:40}} value={this.state.text}
+        <TextInput placeholder="Deck Title" style={theme.textInput} value={this.state.text}
           onChangeText={(text)=>this.setState({text})}/>
         <View style={theme.buttonBar}>
           <TouchableOpacity onPress={this.submit}>
@@ -31,7 +31,7 @@ class AddDeck extends React.Component{
 function mapDispatchToProps(dispatch,{navigation}){
   return {
     addDeck: (title)=>dispatch(addDeck(title)),
-    gotoDecks:()=>navigation.navigate("Decks")
+    gotoDecks:()=>navigation.goBack()
   }
 }
 
