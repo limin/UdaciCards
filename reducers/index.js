@@ -6,13 +6,6 @@ import {
         RECEIVE_QUIZZES
       } from '../actions'
 
-/**
-*
-* sample deck {
-*   id:"j9r67uop34t",
-*   title:"java"
-* }
-*/
 function decks(state={},action){
   switch (action.type) {
     case RECEIVE_DECKS:
@@ -29,14 +22,6 @@ function decks(state={},action){
   }
 }
 
-/**
-* sample card {
-*   id:"i8t36ytr9",
-*   question:"q",
-*   answer:"a",
-*   deckId:"j9r67uop34t"
-* }
-*/
 function cards(state={},action){
   switch (action.type) {
     case RECEIVE_CARDS:
@@ -52,21 +37,6 @@ function cards(state={},action){
   }
 }
 
-/**
-* sample quiz {
-*   id:"op434fgt",
-*   deckId:"j9r67uop34t",
-*   score:90,
-*   start:1509767251,
-*   end: 15097689760,
-*   cards:{
-*     "i8t36ytr9":{
-*         correct: true,
-*         timestamp: 1509777995
-*       }
-*   }
-* }
-*/
 function quizzes(state={},action){
   switch (action.type) {
     case RECEIVE_QUIZZES:

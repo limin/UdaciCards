@@ -5,7 +5,7 @@ const STORE_KEY="org.udacicards.store"
 const DECKS={
   "1":{
     id:"1",
-    title:"fun quizzes",
+    title:"Fun English word quizzes",
     timestamp:Date.now(),
   }
 }
@@ -118,6 +118,24 @@ const CARDS={
     timestamp:Date.now(),
   },
 }
+
+/**
+sample quiz
+{
+   id:"op434fgt",
+   deckId:"j9r67uop34t",
+   score:90,
+   start:1509767251,
+   end: 15097689760,
+   timestamp:1509767253,
+   cards:{
+     "i8t36ytr9":{
+         correct: true,
+         timestamp: 1509777995
+       }
+   }
+}
+*/
 
 export const getData=()=>{
   return AsyncStorage.getItem(STORE_KEY).then((value)=>{
