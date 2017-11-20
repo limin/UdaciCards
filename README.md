@@ -11,7 +11,7 @@ This is the final assessment project for Udacity's React Native course of [Learn
 - Users should be able to quiz themselves on a specific deck and receive a score once they're done.
 - Users should receive a notification to remind themselves to study if they haven't already for that day.
 
-See [detail](./requirements/Project-Specification.pdf)
+See [Project-Specification.pdf](./requirements/Project-Specification.pdf)
 
 ### Views
 * Deck List View (Default View)
@@ -111,6 +111,14 @@ yarn start -- --reset-cache
 exp build:android
 ```
 
+### Tested device
+The app has been tested on Android phone:
+- Model number: PLK-AL10
+- Android version: 6.0
+
+### Releases
+[udacicards-1.0.apk](./release/udacicards-1.0.apk)
+
 ### Contributing
 
 * Fork it!
@@ -125,11 +133,3 @@ exp build:android
 Copyright (c) 2017 Min Li
 
 This program is free software: you can redistribute it and/or modify it under the terms of the Apache License Version 2.0 as published by Apache Software Foundation.
-
-### Releases
-[udacicards-1.0.apk](./release/udacicards-1.0.apk)
-
-### Tested device
-The app has been tested on Android phone:
-- Model number: PLK-AL10
-- Android version: 6.0
