@@ -21,8 +21,8 @@ class DeckDetail extends React.Component{
           <Text style={theme.deckCardCount}>{deck.cards.length}</Text>
         </View>
         <View style={theme.buttonBar}>
-          <TouchableOpacity onPress={()=>this.gotoNewCard(navigation,deck)}><Text style={theme.button}>Add Card</Text></TouchableOpacity>
-          <TouchableOpacity onPress={()=>this.gotoQuiz(navigation,deck)}><Text style={theme.button}>Start Quiz</Text></TouchableOpacity>
+          <TouchableOpacity onPress={()=>this.gotoNewCard(navigation,deck)}><Text style={[theme.button,theme.addCardButton]}>Add Card</Text></TouchableOpacity>
+          <TouchableOpacity onPress={()=>this.gotoQuiz(navigation,deck)}><Text style={[theme.button,theme.startQuizButton]}>Start Quiz</Text></TouchableOpacity>
         </View>
       </View>
     )

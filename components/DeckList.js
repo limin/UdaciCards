@@ -35,7 +35,7 @@ class DeckList extends React.Component{
                   />
         <View style={theme.buttonBar}>
           <TouchableOpacity onPress={this.gotoNewDeck}>
-            <Text style={theme.button}>Add Deck</Text>
+            <Text style={[theme.button,theme.addDeckButton]}>Add Deck</Text>
           </TouchableOpacity>
         </View>
       </View>

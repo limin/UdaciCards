@@ -23,13 +23,15 @@ class AddCard extends React.Component{
   render(){
     return (
       <View style={theme.container}>
-        <TextInput placeholder="question" style={theme.textInput} value={this.state.question}
-          onChangeText={(text)=>this.setState({question:text})}/>
-        <TextInput placeholder="answer" style={theme.textInput} value={this.state.answer}
-          onChangeText={(text)=>this.setState({answer:text})}/>
+        <View style={theme.topContent}>
+          <TextInput placeholder="question" style={theme.textInput} value={this.state.question}
+            onChangeText={(text)=>this.setState({question:text})}/>
+          <TextInput placeholder="answer" style={theme.textInput} value={this.state.answer}
+            onChangeText={(text)=>this.setState({answer:text})}/>
+        </View>
         <View style={theme.buttonBar}>
           <TouchableOpacity onPress={this.submit}>
-            <Text style={theme.button}>Submit</Text>
+            <Text style={[theme.button, theme.submitButton]}>Submit</Text>
           </TouchableOpacity>
         </View>
       </View>

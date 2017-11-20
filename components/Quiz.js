@@ -102,8 +102,8 @@ class Quiz extends React.Component{
           this.state.flipped?<TouchableOpacity onPress={this.flip}><Text style={theme.quizToggleButton}>Question</Text></TouchableOpacity>:<TouchableOpacity onPress={this.flip}><Text style={theme.quizToggleButton}>Answer</Text></TouchableOpacity>
         }
         <View style={theme.buttonBar}>
-          <TouchableOpacity onPress={this.correct}><Text style={theme.button}>Correct</Text></TouchableOpacity>
-          <TouchableOpacity onPress={this.incorrect}><Text style={theme.button}>Incorrect</Text></TouchableOpacity>
+          <TouchableOpacity onPress={this.correct}><Text style={[theme.button, theme.correctButton]}>Correct</Text></TouchableOpacity>
+          <TouchableOpacity onPress={this.incorrect}><Text style={[theme.button, theme.incorrectButton]}>Incorrect</Text></TouchableOpacity>
         </View>
       </View>
     )

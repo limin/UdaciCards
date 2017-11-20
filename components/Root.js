@@ -93,7 +93,7 @@ class Root extends React.Component{
       NewCard:{
         screen: NewCard,
         navigationOptions:({navigation})=>({
-          title: "NEW QUESTION"
+          title: "Add Card"
         })
       }
     })

@@ -16,11 +16,14 @@ class AddDeck extends React.Component{
   render(){
     return (
       <View style={theme.container}>
-        <TextInput placeholder="Deck Title" style={theme.textInput} value={this.state.text}
-          onChangeText={(text)=>this.setState({text})}/>
+        <View style={theme.topContent}>
+          <Text style={theme.textLabel}>What's the title of your new Deck?</Text>
+          <TextInput placeholder="Deck Title" style={theme.textInput} value={this.state.text}
+            onChangeText={(text)=>this.setState({text})}/>
+        </View>
         <View style={theme.buttonBar}>
           <TouchableOpacity onPress={this.submit}>
-            <Text style={theme.button}>Create Deck</Text>
+            <Text style={[theme.button,theme.submitButton]}>Submit</Text>
           </TouchableOpacity>
         </View>
       </View>

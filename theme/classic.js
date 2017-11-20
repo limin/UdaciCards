@@ -3,7 +3,13 @@ const classic={
     flex: 1,
     backgroundColor: '#fff',
   },
+  topContent:{
+    flex: 1,
+    justifyContent: 'flex-start',
+    alignContent: 'center',
+  },
   centerContent:{
+    flex: 1,
     justifyContent: 'center',
     alignContent: 'center',
   },
@@ -31,9 +37,19 @@ const classic={
     color:'#666',
     fontSize:16
   },
+  textLabel: {
+    textAlign: 'center',
+    padding: 8,
+    margin: 8,
+    fontSize: 36,
+  },
   textInput: {
     height:40,
-    padding: 8
+    margin: 8,
+    padding: 8,
+    borderWidth: 1,
+    borderRadius: 10,
+    borderColor: '#000'
   },
   deckTitle:{
     textAlign:'center',
@@ -76,13 +92,44 @@ const classic={
   },
   button: {
     flex: 0,
+    width:280,
+    textAlign:'center',
     padding: 8,
     paddingLeft: 26,
     paddingRight: 26,
     margin: 3,
-    backgroundColor: '#4097ce',
+    backgroundColor: '#fff',
+    color: '#000',
+    fontSize:28,
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: '#000'
+  },
+  submitButton:{
+    backgroundColor: '#000',
     color: '#fff',
-    fontSize:28
+  },
+  addCardButton:{
+    backgroundColor: '#fff',
+    color: '#000',
+  },
+  addDeckButton:{
+    backgroundColor: '#fff',
+    color: '#000',
+  },
+  startQuizButton:{
+    backgroundColor: '#000',
+    color: '#fff',
+  },
+  correctButton:{
+    backgroundColor: '#008000',
+    borderColor: '#008000',
+    color: '#fff',
+  },
+  incorrectButton:{
+    backgroundColor: '#d4271b',
+    borderColor: '#d4271b',
+    color: '#fff',
   }
 }
 
