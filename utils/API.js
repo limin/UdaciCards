@@ -21,7 +21,10 @@ sample quiz
    }
 }
 */
-
+/**
+* @description Get data from AsyncStorage
+* @return A promise of data
+*/
 export const getData=()=>{
   return AsyncStorage.getItem(STORE_KEY).then((value)=>{
     let data={}
@@ -83,6 +86,11 @@ const saveCard=(card)=>{
   })
 }
 
+/**
+* @description Save quiz into AsyncStorage
+* @param {object} Quiz
+* @return A promise of saved quiz
+*/
 export const saveQuiz=(quiz)=>{
   const newQuiz={
     ...quiz,
@@ -103,18 +111,33 @@ export const saveQuiz=(quiz)=>{
   })
 }
 
+/**
+* @description Get card by its id
+* @param {string} id
+* @return A promise of found card or null if no card is found
+*/
 export const getCard=(id)=>{
   return getData().then((data)=>{
     return new Promise((resolve,reject)=>data.cards?resolve(data.cards[id]):resolve(null))
   })
 }
 
+/**
+* @description Get deck by its id
+* @param {string} id
+* @return A promise of found deck or null if no deck is found
+*/
 export const getDeck=(id)=>{
   return getData().then((data)=>{
     return new Promise((resolve,reject)=>data.decks?resolve(data.decks[id]):resolve(null))
   })
 }
 
+/**
+* @description Add deck into storage
+* @param { string } title
+* @return A promise of added deck
+*/
 export const addDeck=(title)=>{
   const deck={
     id:uid(),
@@ -123,6 +146,11 @@ export const addDeck=(title)=>{
   return saveDeck(deck)
 }
 
+/**
+* @description Add card into AsyncStorage
+* @param { object } card
+* @return A promise of added card
+*/
 export const addCard=(card)=>{
   const newCard={
     ...card,
